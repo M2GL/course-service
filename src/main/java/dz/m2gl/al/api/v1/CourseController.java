@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dz.m2gl.al.util.HeaderUtil;
 
-import dz.m2gl.al.domain.SessionPedag;
+import dz.m2gl.al.domain.Support;
 import dz.m2gl.al.dto.CourseDto;
 import dz.m2gl.al.repository.CourseRepository;
 import dz.m2gl.al.service.CourseService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class CourseController {
 	 private final CourseRepository  courseRepository;
 	 private final CourseService courseService;
@@ -52,7 +52,7 @@ public class CourseController {
 	  @GetMapping("/courses/{id}")
 	    public ResponseEntity getOne(@PathVariable(value = "id") Long id) {
 
-	        Optional<SessionPedag> course = courseRepository.findById(id);
+	        Optional<Support> course = courseRepository.findById(id);
 	        if (course.isPresent()) {
 	            CourseDto courseDto = new CourseDto();
 	            courseDto.setCourse(course.get());
@@ -68,7 +68,7 @@ public class CourseController {
 	    public ResponseEntity deleteCourse(@PathVariable(value = "id") Long id) {
 
 		  try {
-			  SessionPedag course = courseService.delteCourse(id);
+			  Support course = courseService.delteCourse(id);
 			  return ResponseEntity.ok().body(course);
 		  
 			  
@@ -79,10 +79,10 @@ public class CourseController {
 	      
 	    }
 	  @PutMapping("/courses/{id}")
-	    public ResponseEntity updateCourse(@PathVariable(value = "id") Long id, @RequestBody SessionPedag newCourse) throws URISyntaxException, InterruptedException, IOException {
-	        Optional<SessionPedag> course = courseRepository.findById(id);
+	    public ResponseEntity updateCourse(@PathVariable(value = "id") Long id, @RequestBody Support newCourse) throws URISyntaxException, InterruptedException, IOException {
+	        Optional<Support> course = courseRepository.findById(id);
 	        if (course.isPresent()) {
-	        	SessionPedag course2 = courseService.updateCourse(course.get(), newCourse);
+	        	Support course2 = courseService.updateCourse(course.get(), newCourse);
 
 	            return ResponseEntity.created(new URI("/api/courses/" + course.get().getId()))
 	                    .headers(HeaderUtil.createAlert("A course is updated with identifier ", course2.getId()+""))
@@ -96,7 +96,7 @@ public class CourseController {
 	    public ResponseEntity ResponseEntity (@RequestBody CourseDto courseDto) throws URISyntaxException, InterruptedException, IOException {
 
 
-		   SessionPedag course = courseService.createCourse(courseDto);
+		   Support course = courseService.createCourse(courseDto);
 
 	        return ResponseEntity.created(new URI("/api/course/" + course.getId()))
 	                .headers(HeaderUtil.createAlert("A course is created with identifier ", course.getId()+""))

@@ -3,7 +3,7 @@ package dz.m2gl.al.dto;
 
 
 
-import dz.m2gl.al.domain.SessionPedag;
+import dz.m2gl.al.domain.Support;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 
 public class CourseDto {
 	
-	 private SessionPedag course;
+	 private Support course;
 	 
 	 
 	

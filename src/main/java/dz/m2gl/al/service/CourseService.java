@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import dz.m2gl.al.domain.SessionPedag;
+import dz.m2gl.al.domain.Support;
 import dz.m2gl.al.dto.CourseDto;
 import dz.m2gl.al.repository.CourseRepository;
 
@@ -22,7 +22,7 @@ public class CourseService {
 	      
 	    }
 	
-	  public SessionPedag updateCourse(SessionPedag oldOne, SessionPedag newOne) {
+	  public Support updateCourse(Support oldOne, Support newOne) {
       oldOne.setName(newOne.getName());
       oldOne.setModule(newOne.getModule());
       oldOne.setDate(newOne.getDate());
@@ -33,8 +33,8 @@ public class CourseService {
 
     }
 	  
-	  public SessionPedag delteCourse(Long id) {
-		  Optional<SessionPedag> course = courseRepository.findById(id);
+	  public Support delteCourse(Long id) {
+		  Optional<Support> course = courseRepository.findById(id);
 	        if (course.isPresent()) {
 	        	courseRepository.delete(course.get());
 
@@ -43,9 +43,9 @@ public class CourseService {
 	    }
 	  
 	  
-	  public SessionPedag createCourse (CourseDto courseDto) {
+	  public Support createCourse (CourseDto courseDto) {
 		  
-		  SessionPedag course = courseDto.getCourse();
+		  Support course = courseDto.getCourse();
 		  
 		  courseRepository.save(course);
 		  return course;

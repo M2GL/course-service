@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SessionPedag {
+public class Support {
 	@Id
     @GeneratedValue
     private int id;
