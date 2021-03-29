@@ -6,9 +6,12 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import dz.m2gl.al.domain.Module;
 import dz.m2gl.al.domain.Support;
 import dz.m2gl.al.dto.CourseDto;
 import dz.m2gl.al.repository.CourseRepository;
+import dz.m2gl.al.repository.ModuleRepository;
+import dz.m2gl.al.util.CourseTypes;
 
 
 
@@ -16,9 +19,11 @@ import dz.m2gl.al.repository.CourseRepository;
 public class CourseService {
 	
 	 private final CourseRepository  courseRepository;
+	 private final ModuleRepository moduleRepository;
 	
-	  public CourseService( CourseRepository courseRepository) {
+	  public CourseService( CourseRepository courseRepository,ModuleRepository moduleRepository) {
 	        this.courseRepository = courseRepository;
+	        this.moduleRepository = moduleRepository;
 	      
 	    }
 	
@@ -43,12 +48,29 @@ public class CourseService {
 	    }
 	  
 	  
-	  public Support createCourse (CourseDto courseDto) {
+	  public Support createCourse (CourseDto courseDto,Long id) {
+		  
+		  Optional <Module> moduleOp = moduleRepository.findById(id);
+		  
+		  if (!moduleOp.isPresent()) {
+			  //throw new Exception("id: "+ id); 
+		  }
+		  
+		  Module module = moduleOp.get();
+		
 		  
 		  Support course = courseDto.getCourse();
+		  module.getSupports().add(course);
+		  moduleRepository.save(module);
+		  course.setModule(module);
 		  
-		  courseRepository.save(course);
-		  return course;
+		  Support savedCourse = courseRepository.save(course);
+		  
+		  
+		
+		 
+		
+		  return savedCourse;
 		  
 	  }
 }
